@@ -31,7 +31,7 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(context, "company.db",
 
     }
 
-    fun getAllData():List<EmployeeModel>{
+    fun getAllData():MutableList<EmployeeModel>{
         var returnList = ArrayList<EmployeeModel>()
         var queryString = "SELECT * FROM EMPLOYEE_TABLE"
         var db = this.readableDatabase
@@ -55,4 +55,10 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(context, "company.db",
         return returnList
     }
 
-} 
+    fun deleteOne(employeeModel: EmployeeModel){
+        var db = this.writableDatabase
+        var queryString = "DELETE FROM EMPLOYEE_TABLE WHERE id = ${employeeModel.id}"
+        var cursor = db.rawQuery(queryString,null)
+        cursor.moveToFirst()
+    }
+}
